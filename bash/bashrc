@@ -1,0 +1,8 @@
+#!/bin/bash
+
+[[ -f /etc/bashrc ]] && source /etc/bashrc
+
+for FILE in `find ~/.bashrc.d/ -name "*.sh" -type f`; do
+  source ${FILE}
+done
+

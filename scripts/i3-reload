@@ -1,0 +1,4 @@
+#!/bin/bash
+set -o errexit
+cat ~/.i3/conf.d/*.conf > ~/.i3/config
+i3-msg reload &> /dev/null

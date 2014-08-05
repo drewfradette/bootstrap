@@ -1,0 +1,136 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Ensure system is latest
+      yum: name=* state=latest
+      sudo: true
+
+    - name: Install extra repositories
+      copy: src=repos/google-chrome.repo dest=/etc/yum.repos.d/google-chrome.repo
+      sudo: true
+
+    - name: Install Development Tools package group
+      yum: name="@Development Tools" state=present
+      sudo: true
+
+    - name: Install Common Packages
+      yum: name={{item}} state=present
+      sudo: true
+      with_items:
+        - ack
+        - bzr
+        - curl
+        - fedup
+        - git
+        - htop
+        - lua
+        - mercurial
+        - nmap
+        - python-virtualenv
+        - tar
+        - telnet
+        - tmux
+        - vim
+        - wget
+        - unzip
+
+    - name: Install packages for window manager
+      yum: name={{item}} state=present
+      sudo: True
+      with_items:
+        - batti
+        - conky
+        - dmenu
+        - dzen2
+        - feh
+        - google-chrome-stable
+        - gtk-redshift
+        - gvim
+        - i3
+        - i3-doc
+        - i3-ipc
+        - i3lock
+        - i3status
+        - keepassx
+        - ktimer
+        - NetworkManager
+        - parcellite
+        - terminator
+        - thunar
+        - xorg-x11-xinit-session
+        - xscreensaver
+        - xscreensaver-extras
+        - xscreensaver-gl-extras
+
+    - name: Setup directories in home folder
+      file: path=~/{{item}} state=directory
+      with_items:
+        - .backgrounds
+        - bin
+        - .fonts
+        - .i3
+        - .i3/conf.d
+        - src
+        - tmp
+        - .vim
+        - .vim/swp
+        - .vim/undo
+        - .config
+        - .config/terminator
+        - .config/parcellite
+        - .bashrc.d
+
+    - name: copy background images to home directory
+      copy: src="{{item}}" dest=~/.backgrounds
+      with_fileglob:
+        - backgrounds/*
+
+    - name: Install fonts to home directory
+      copy: src={{item}} dest=~/.fonts/
+      with_fileglob:
+        - fonts/*.otf
+        - fonts/*.ttf
+
+    - name: Install custom scripts to bin
+      copy: src={{item}} dest=~/bin/ mode=755
+      with_fileglob:
+        - scripts/*
+
+    - name: Setup i3
+      copy: src={{item}} dest=~/.i3/conf.d/
+      with_fileglob:
+        - i3/conf.d/*.conf
+
+    - name: Setup i3status
+      copy: src=i3/i3status.conf dest=~/.i3status.conf
+
+    - name: Setup vim
+      copy: src=vim/vimrc dest=~/.vimrc
+
+    - name: Setup gvim
+      copy: src=vim/gvimrc dest=~/.gvimrc
+
+    - name: Setup basic bashrc
+      copy: src=bash/bashrc dest=~/.bashrc
+
+    - name: Setup modular bashrc
+      copy: src={{item}} dest=~/.bashrc.d/
+      with_fileglob:
+        - bash/*.sh
+
+    - name: Setup parcellite configuration
+      copy: src=parcellite/parcelliterc dest=~/.config/parcellite/parcelliterc
+
+    - name: Setup git config
+      copy: src=git/gitconfig dest=~/.gitconfig
+
+    - name: Setup gitignore
+      copy: src=git/gitignore dest=~/.gitignore
+
+    - name: Setup xsession to use i3
+      copy: src=i3/xsession dest=~/.xsession mode=0755
+
+    - name: Setup terminator configuration file
+      copy: src=terminator/config dest=~/.config/terminator/config
