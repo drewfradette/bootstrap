@@ -1,9 +1,9 @@
 #!/bin/bash
 
-if [[ -f $HOME/.Xdefaults ]] && xrdb -merge $HOME/.Xdefaults
-if [[ -f $HOME/.Xresources ]] && xrdb -merge $HOME/.Xresources
+[[ -f $HOME/.Xdefaults ]] && xrdb -merge $HOME/.Xdefaults
+[[ -f $HOME/.Xresources ]] && xrdb -merge $HOME/.Xresources
 
 cat $HOME/.i3/conf.d/*.conf > $HOME/.i3/config
 
 # The bid'ness
-exec /usr/bin/i3
+exec i3
