@@ -23,3 +23,4 @@ Still a few things to do here:
   - Add `i3` scripts for dual monitor
   - Make compatible with Ubuntu
   - Add support for themes (maybe?)
+  - Look into a little bit of compsiting (compton?)
