@@ -63,6 +63,7 @@
         - xscreensaver
         - xscreensaver-extras
         - xscreensaver-gl-extras
+        - compton
 
     - name: Setup directories in home folder
       file: path=~/{{item}} state=directory recurse=true
