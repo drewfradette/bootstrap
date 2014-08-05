@@ -40,7 +40,6 @@
       yum: name={{item}} state=present
       sudo: True
       with_items:
-        - batti
         - conky
         - dmenu
         - dzen2
@@ -66,23 +65,21 @@
         - xscreensaver-gl-extras
 
     - name: Setup directories in home folder
-      file: path=~/{{item}} state=directory
+      file: path=~/{{item}} state=directory recurse=true
       with_items:
         - .backgrounds
         - bin
         - .fonts
-        - .i3
         - .i3/conf.d
         - src
         - tmp
-        - .vim
         - .vim/swp
         - .vim/undo
-        - .config
         - .config/terminator
         - .config/parcellite
         - .bashrc.d
-
+        - .config/xfce4/xfconf/xfce-perchannel-xml
+          
     - name: copy background images to home directory
       copy: src="{{item}}" dest=~/.backgrounds
       with_fileglob:
@@ -109,6 +106,9 @@
 
     - name: Setup xscreensaver
       copy: src=i3/xscreensaver dest=~/.xscreensaver
+
+    - name: Configure xfce4-power-manager
+      copy: src=xfce4/xfce4-power-manager.xml dest=~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
 
     - name: Setup vim
       copy: src=vim/vimrc dest=~/.vimrc
