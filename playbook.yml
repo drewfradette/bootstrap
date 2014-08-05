@@ -47,6 +47,7 @@
         - feh
         - google-chrome-stable
         - gtk-redshift
+        - redshift
         - gvim
         - i3
         - i3-doc
@@ -105,6 +106,9 @@
 
     - name: Setup i3status
       copy: src=i3/i3status.conf dest=~/.i3status.conf
+
+    - name: Setup xscreensaver
+      copy: src=i3/xscreensaver dest=~/.xscreensaver
 
     - name: Setup vim
       copy: src=vim/vimrc dest=~/.vimrc
