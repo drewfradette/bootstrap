@@ -1,5 +1,6 @@
 #!/bin/bash
-
 set -o errexit
 
-feh --randomize --bg-fill ~/.backgrounds/*
+BACKGROUND="$(ls -1 ~/.backgrounds | sort -R | head -1)"
+feh --bg-fill ~/.backgrounds/"$BACKGROUND"
+echo ~/.backgrounds/"$BACKGROUND"

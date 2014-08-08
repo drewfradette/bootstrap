@@ -9,3 +9,6 @@ set cursorcolumn
 
 set guifont=Fantasque\ Sans\ Mono\ 10
 set encoding=utf-8
+
+set guioptions-=m    " Remove menu bar
+set guioptions-=T    " Remove toolbar
