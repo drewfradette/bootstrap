@@ -137,5 +137,8 @@
     - name: Setup xsession to use i3
       copy: src=i3/xsession dest=~/.xsession mode=0755
 
+    - name: Link xinitrc to xsession
+      file: src=~/.xsession dest=~/.xinitrc state=link force=yes
+
     - name: Setup terminator configuration file
       copy: src=terminator/config dest=~/.config/terminator/config
