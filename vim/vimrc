@@ -163,6 +163,13 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_buffers = 0
 
+""""""""""""""""""""""
+" Syntastic Settings "
+""""""""""""""""""""""
+let g:syntastic_python_checkers=['flake8']
+let g:syntastic_python_flake8_args='--ignore=E111,E302,E231'
+
+
 """""""""""""""""""""""""
 " Tlist Plugin Settings "
 """""""""""""""""""""""""
