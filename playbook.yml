@@ -1,6 +1,5 @@
 ---
 - hosts: 127.0.0.1
-  connection: local
   gather_facts: false
   tasks:
     - name: Ensure system is latest
@@ -63,7 +62,14 @@
         - xscreensaver
         - xscreensaver-extras
         - xscreensaver-gl-extras
-        - compton
+        - dunst
+        - xbacklight
+
+    - name: Remove unnecessary packages
+      yum: name={{item}} state=absent
+      sudo: true
+      with_items:
+        - "xfce4-notifyd"
 
     - name: Setup directories in home folder
       file: path=~/{{item}} state=directory recurse=true
@@ -78,13 +84,17 @@
         - .vim/undo
         - .config/terminator
         - .config/parcellite
+        - .config/dunst
         - .bashrc.d
         - .config/xfce4/xfconf/xfce-perchannel-xml
-          
+
     - name: copy background images to home directory
       copy: src="{{item}}" dest=~/.backgrounds
       with_fileglob:
         - backgrounds/*
+
+    - name: Setup Dunst
+      copy: src=dunst/dunstrc dest=~/.config/dunst/
 
     - name: Install fonts to home directory
       copy: src={{item}} dest=~/.fonts/
@@ -96,6 +106,11 @@
       copy: src={{item}} dest=~/bin/ mode=755
       with_fileglob:
         - scripts/*
+
+    - name: Clean out i3 configuration
+      file: path={{item}} state=absent
+      with_fileglob:
+        - ~/.i3/conf.d/*.conf
 
     - name: Setup i3
       copy: src={{item}} dest=~/.i3/conf.d/
