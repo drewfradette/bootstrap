@@ -110,7 +110,7 @@ i3:
 	make backgrounds i3blocks rofi i3-utils nerdfonts parcellite gimp xscreensaver
 
 .PHONY: i3blocks
-I3BLOCKS_DIR=${HOME}/src/i3blocks
+I3BLOCKS_DIR=${SRC_DIR}/i3blocks
 I3BLOCKS_VERSION=1.4
 i3blocks:
 	# i3blocks
