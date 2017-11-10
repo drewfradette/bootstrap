@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+require 'securerandom'
+require 'optparse'
+
+uuid = SecureRandom.uuid
+opts = {}
+
+ARGV.options do |o|
+  o.set_summary_indent("  ")
+  o.on("--no-exit", "Leave the tmux session running") {|v| opts[:no_exit] = true }
+  o.on("-t", "--tail", "Tail the syslog for cmd") {|v| opts[:tail] = true }
+  o.parse!
+end
+
+cmd = "#{ARGV.join(" ")} | logger -t cmd_id=#{uuid}"
+if !opts.key?(:no_exit)
+  cmd += "; exit \$?"
+end
+
+output = `tmux new-session -d -s #{uuid}`
+output += `tmux send-keys -t #{uuid} "#{cmd}" C-m`
+
+puts "Spawned '#{cmd}' in a tmux session"
+puts "  tmux attach -t #{uuid}"
+
+if opts.key?(:tail)
+  exec "tail -f /var/log/syslog | grep cmd_id=#{uuid}"
+end

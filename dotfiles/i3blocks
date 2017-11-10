@@ -1,0 +1,28 @@
+[window title]
+command=sleep 0.5; xdotool getactivewindow getwindowname
+interval=repeat
+align=center
+color=#AFC4DB
+min_width=1080
+
+[date]
+command=date '+%Y-%m-%d'
+interval=60
+
+[seperator]
+
+[time]
+command=date '+%H:%M'
+interval=1
+
+[seperator]
+
+[time]
+command=echo "$(TZ='America/Los_Angeles' date '+%H:%M')PST"
+interval=1
+
+[seperator]
+
+[time]
+command=echo "$(TZ='UTC' date '+%H:%M')UTC"
+interval=1

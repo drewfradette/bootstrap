@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -x
+set -o errexit
+set -o pipefail
+
+BACKGROUND_DIR=$HOME/.local/backgrounds
+feh --bg-fill --randomize ${BACKGROUND_DIR}

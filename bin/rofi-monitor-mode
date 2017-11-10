@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -x
+
+items=()
+items+="Mobile [1 monitor]\n"
+items+="Office [2 monitors]\n"
+items+="Office [3 monitors]\n"
+
+choice=$(echo -e $items | rofi -dmenu -p '$> ')
+
+case "$choice" in
+  "Mobile [1 monitor]")
+    ~/.arandr/mobile.sh;;
+  "Office [2 monitors]")
+    ~/.arandr/office-2.sh;;
+  "Office [3 monitors]")
+    ~/.arandr/office.sh;;
+esac

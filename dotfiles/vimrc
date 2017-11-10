@@ -1,0 +1,217 @@
+set nocompatible
+set encoding=utf-8
+
+" Remap Leader
+let mapleader="\<Space>"
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#rc()
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'The-NERD-tree'
+augroup NerdTree
+  au!
+  " If NERDTree is the only window left open, close vim
+  let NERDTreeMinimalUI=1
+  map <silent> <F2> :NERDTreeToggle<CR>
+  map <silent> <C-o> :NERDTreeFind<CR>
+augroup END
+
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+augroup VimAirline
+  au!
+  let g:airline_powerline_fonts = 1
+  let g:airline#extensions#tabline#enabled = 1
+  let g:airline#extensions#tabline#show_buffers = 0
+augroup END
+
+Plugin 'mattn/gist-vim'
+augroup GistVim
+  au!
+  let g:gist_post_private = 1
+  let g:gist_show_privates = 1
+  let g:fist_detect_filetype = 1
+  let g:gist_open_browser_after_post = 1
+augroup END
+
+Plugin 'mileszs/ack.vim'
+augroup AckVim
+  au!
+  if executable("ag")
+    let g:ackprg = "ag --vimgrep"
+  endif
+  cnoreabbrev Ack Ack!
+  nnoremap <Leader>a :Ack!<Space>
+augroup END
+
+Plugin 'ctrlpvim/ctrlp.vim'
+augroup CtrlPVim
+  au!
+  let g:ctrlp_working_path_mode = 'ra'
+  let g:ctrlp_cmd = 'CtrlPMixed'
+
+  nnoremap <c-b> :CtrlPBuffer<CR>
+  nnoremap <c-f> :CtrlP<CR>
+augroup END
+
+Plugin 'bling/vim-bufferline'
+
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-fugitive'
+Plugin 'Valloric/YouCompleteMe'
+augroup YouCompleteMe
+  au!
+  "let g:ycm_error_symbol = ""
+  "let g:ycm_warning_symbol = ""
+  let g:ycm_enable_diagnostic_signs = 1
+  let g:ycm_enable_diagnostic_highlighting = 1
+augroup END
+
+
+Plugin 'easymotion/vim-easymotion'
+augroup EasyMotion
+  au!
+  nmap <Leader>f <Plug>(easymotion-overwin-w)
+  nmap <Leader>L <Plug>(easymotion-overwin-line)
+augroup END
+
+Plugin 'chriskempson/base16-vim'
+Plugin 'lilydjwg/colorizer'
+Plugin 'godlygeek/tabular'
+Plugin 'RltvNmbr.vim'
+
+" Language Specific Plugins
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'fatih/vim-hclfmt'
+Plugin 'tpope/vim-rvm'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'ekalinin/Dockerfile.vim'
+Plugin 'fatih/vim-go'
+augroup Golang
+  au!
+  let g:go_highlight_functions = 1
+  let g:go_highlight_methods = 1
+  let g:go_highlight_fields = 1
+  let g:go_highlight_types = 1
+  let g:go_highlight_operators = 1
+  let g:go_highlight_build_constraints = 1
+  let g:go_highlight_extra_types = 1
+  let g:go_highlight_string_spellcheck = 1
+  let g:go_fmt_command = "goimports"
+
+  au FileType go setlocal rtp+=$GOROOT/misc/vim
+  au FileType go setlocal spelllang=en
+augroup END
+
+" Markdown plugins
+Plugin 'plasticboy/vim-markdown'
+Plugin 'mzlogin/vim-markdown-toc'
+augroup MarkdownFormatting
+  au!
+  let g:vim_markdown_toc_autofit = 1
+  let g:vim_markdown_emphasis_multiline = 0
+  let g:vim_markdown_new_list_item_indent = 4
+
+  au FileType markdown setlocal conceallevel=2
+  au FileType markdown nnoremap <F3> :Toc<CR>
+  au FileType markdown setlocal background=light
+  au FileType markdown setlocal spelllang=en
+
+  "au BufWritePre *.md silent! :TableFormat
+augroup END
+
+augroup WildCard
+  au!
+  au BufWritePre <buffer> :call StripTrailingWhitespaces()
+  au  * set nocursorline nocursorcolumn
+  au WinLeave * set nocursorline nocursorcolumn
+  au WinEnter,BufRead * set cursorline cursorcolumn
+augroup END
+
+filetype plugin indent on
+syntax on
+
+let base16colorspace=256
+
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+else
+  colorscheme default
+endif
+
+set background=dark
+set bs=indent,eol,start         " allow backspacing over everything in insert mode
+set number                      " turn on line numbers
+set relativenumber              " Turn on relative number lines
+set ruler                       " show the cursor position all the time
+set viminfo='20,\"50            " read/write a .viminfo file, don't store more than 50 lines of registers
+set history=500                 " keep 500 lines of command line history
+set hlsearch                    " Turn on highlighting for search
+set nowrap                      " Don't wrap the text
+set tabstop=2                   " The number of spaces a tab character should use.
+set expandtab                   " Use the appropriate number of spaces to insert a tab.
+set shiftwidth=2                " Number of spaces to use for each step of auto-indenting
+set smartindent                 " Attempt to do smart indenting.
+set listchars=trail:‧,tab:→\    " Define the character's to show for trailing spaces and tabs.
+set list                        " Show the characters defined in listchars
+set colorcolumn=120             " Display print margin at 120 characters
+set laststatus=2                " Always show the status bar now that vim-powerline made it awesome.
+set nomousehide
+set undodir=~/.vim/undo//       " Persistent Undo folder
+set undofile                    " Enable persistent undo
+set dir=~/.vim/swp//            " Fixed location for swp files
+set foldenable                  " Enable folds
+set foldmethod=syntax           " Fold blocks based on Syntax
+set foldlevel=999               " Foldception
+set bufhidden=delete            " Delete hidden buffers
+set ssop-=options               " Don't save vimrc to sessions
+
+fun! NumberToggle()
+  if (&relativenumber == 1)
+    set norelativenumber
+  else
+    set relativenumber
+  endif
+endfunc
+
+nnoremap <silent> <F5> :call NumberToggle()<CR>
+
+" Leader Actions
+nnoremap <Leader>w :w<CR>
+
+" Shutup ex mode
+map Q <Nop>
+cmap w!! w !sudo tee > /dev/null %
+nnoremap ; :
+
+" Quicker Global Registry shortcuts
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+vmap <Leader>p "+p
+vmap <Leader>P "+P
+
+" Quick insert linebreak
+nmap <CR> i<CR><Esc>
+
+fun! StripTrailingWhitespaces()
+  let l = line(".")
+  let c = col(".")
+  %s/\s\+$//e
+  call cursor(l,c)
+endfun
+
+fun! FormatMDTable()
+
+endfun
+
+fun! AutoFormat()
+  let l = line(".")
+  let c = col(".")
+  :norm gg=G
+  call cursor(l,c)
+endfun
+
