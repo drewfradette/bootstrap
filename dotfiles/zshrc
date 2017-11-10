@@ -9,13 +9,14 @@ if false || [[ -d $HOME/.rbenv/bin ]]; then
   eval "$(rbenv init -)"
 fi
 
+export LANG=en_US.UTF8
 export EDITOR=nvim
 export GOROOT=/usr/lib/go-1.9
 export GOPATH=$HOME/src/golang
 export REPORTTIME=2
 export HISTSIZE=999999999999
 export SAVEHIST=$HISTSIZE
-export TERM="xterm-256color"
+export TERM="rxvt-unicode-256color"
 
 export PATH="${GOPATH}/bin:${GOROOT}/bin:$PATH"
 

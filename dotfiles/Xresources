@@ -14,6 +14,7 @@
 #define base0D #7587a6
 #define base0E #9b859d
 #define base0F #9b703f
+#define termfont xft:FantasqueSansMono Nerd Font:pixelsize=16:antialias=false:hinting=false
 
 *.foreground:   base05
 *.background:   base00
@@ -59,7 +60,10 @@ URxvt.intensityStyles:    false
 URxvt.background:         rgba:0000/0000/0200/c800
 URxvt.colorUL:            #4682B4
 URxvt.depth:              32
-URxvt.font:               xft:FantasqueSansMono Nerd Font:size=12
+URxvt.font:               termfont
+URxvt.boldFont:           termfont
+URxvt.italicFont:         termfont
+URxvt.boldItalicFont:     termfont
 URxvt.letterSpace:        -1
 URxvt.matcher.button:     1
 URxvt.perl-ext-common:    default,matcher,tabbedex
