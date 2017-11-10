@@ -1,0 +1,52 @@
+autoload -Uz  add-zsh-hook
+export ZSH=$HOME/.oh-my-zsh
+export ZSH_THEME="drewfradette"
+plugins=(git command-not-found git-extras sudo upstart heroku vagrant tmux ssh-agent history)
+source $ZSH/oh-my-zsh.sh
+
+if false || [[ -d $HOME/.rbenv/bin ]]; then
+  export PATH=${HOME}/.rbenv/bin:$PATH
+  eval "$(rbenv init -)"
+fi
+
+export EDITOR=nvim
+export GOROOT=/usr/lib/go-1.9
+export GOPATH=$HOME/src/golang
+export REPORTTIME=2
+export HISTSIZE=999999999999
+export SAVEHIST=$HISTSIZE
+export TERM="xterm-256color"
+
+export PATH="${GOPATH}/bin:${GOROOT}/bin:$PATH"
+
+alias ls="ls --group-directories-first --color=auto"
+alias ll="ls -lh"
+alias la="ll -a"
+alias vim="nvim"
+alias less="most"
+alias h="heroku"
+alias g="git"
+alias follow="tail -f"
+alias ag="ag --ignore vendor"
+alias agg="ag --noheading"
+
+cdg_autocomplete(){ reply=($(find $GOPATH/src/* -maxdepth 2 -type d | sed "s|^${GOPATH}/src/||g")) }
+cdg() { cd ${GOPATH}/src/${@} }
+compctl -K cdg_autocomplete cdg
+
+cds_autocomplete(){ reply=($(ls --color=none ${HOME}/src)) }
+cds() { cd ${HOME}/src/${@} }
+compctl -K cds_autocomplete cds
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+BASE16_SHELL=$HOME/.config/base16-shell/
+if [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ]; then
+  eval "$($BASE16_SHELL/profile_helper.sh)"
+  $BASE16_SHELL/scripts/base16-twilight.sh twilight
+fi
+
+[[ -s $HOME/src/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]] \
+  && source $HOME/src/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+which kubectl &>/dev/null && source <(kubectl completion zsh)  # setup autocomplete in zsh

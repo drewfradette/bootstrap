@@ -1,0 +1,160 @@
+set $mod Mod4
+set $alt Mod1
+
+floating_modifier $mod
+force_focus_wrapping yes
+focus_follows_mouse no
+
+font pango:FantasqueSansMono Nerd Font 12
+
+# i3-gaps settings
+smart_gaps on
+gaps inner 8
+
+# Startup tasks
+exec --no-startup-id parcellite
+exec --no-startup-id nm-applet
+exec --no-startup-id pasystray
+exec --no-startup-id xfce4-power-manager
+exec --no-startup-id xscreensaver -no-splash
+exec --no-startup-id unclutter
+
+# Base16 Twighlight
+set $base00 #1e1e1e
+set $base01 #323537
+set $base02 #464b50
+set $base03 #5f5a60
+set $base04 #838184
+set $base05 #a7a7a7
+set $base06 #c3c3c3
+set $base07 #ffffff
+set $base08 #cf6a4c
+set $base09 #cda869
+set $base0A #f9ee98
+set $base0B #8f9d6a
+set $base0C #afc4db
+set $base0D #7587a6
+set $base0E #9b859d
+set $base0F #9b703f
+
+# Workspace Names
+set $ws1 1:
+set $ws2 2:
+set $ws3 3:
+set $ws4 4:
+set $ws5 5:
+set $ws6 6:
+set $ws7 7:
+set $ws8 8:
+set $ws9 9:
+set $ws0 10:
+
+# Window exceptions
+for_window [class="Display.im6"] floating enable
+for_window [class="Pavucontrol"] floating enable
+for_window [class="Blueman-manager"] floating enable
+for_window [class="^.*"] border pixel 0
+
+# Layout bindings
+bindsym $mod+w                layout tabbed
+bindsym $mod+s                layout stacking
+bindsym $mod+e                layout toggle split
+bindsym $mod+Shift+space      floating toggle
+bindsym $mod+h                split h
+bindsym $mod+v                split v
+
+bindsym $mod+f                fullscreen
+bindsym $mod+Shift+c          kill
+bindsym $mod+Left             focus left
+bindsym $mod+Right            focus right
+bindsym $mod+Down             focus down
+bindsym $mod+Up               focus up
+
+bindsym $mod+Shift+Left       move left
+bindsym $mod+Shift+Right      move right
+bindsym $mod+Shift+Up         move up
+bindsym $mod+Shift+Down       move down
+bindsym $mod+t                move workspace to output right
+
+bindsym $mod+a                focus parent
+bindsym $mod+d                focus child
+
+bindsym $mod+Shift+S          exec i3-swap
+bindsym $mod+Shift+z          exec xscreensaver-command -lock
+bindsym $mod+Shift+grave      exec workspace-switcher
+bindsym $mod+bracketleft      exec toggle-trackpad
+bindsym $mod+p                exec rofi -show run
+bindsym $mod+Return           exec urxvt
+bindsym $mod+F12              exec rofi-system-mode
+bindsym $mod+F8               exec rofi-monitor-mode
+
+bindsym $alt+Tab                      workspace next
+bindsym $alt+Shift+Tab                workspace prev
+bindsym --whole-window button10       workspace next
+bindsym --whole-window $mod+button10  workspace prev
+
+bindsym $mod+1                workspace $ws1
+bindsym $mod+2                workspace $ws2
+bindsym $mod+3                workspace $ws3
+bindsym $mod+4                workspace $ws4
+bindsym $mod+5                workspace $ws5
+bindsym $mod+6                workspace $ws6
+bindsym $mod+7                workspace $ws7
+bindsym $mod+8                workspace $ws8
+bindsym $mod+9                workspace $ws9
+bindsym $mod+0                workspace $ws0
+
+bindsym $mod+Shift+1          move container to workspace $ws1
+bindsym $mod+Shift+2          move container to workspace $ws2
+bindsym $mod+Shift+3          move container to workspace $ws3
+bindsym $mod+Shift+4          move container to workspace $ws4
+bindsym $mod+Shift+5          move container to workspace $ws5
+bindsym $mod+Shift+6          move container to workspace $ws6
+bindsym $mod+Shift+7          move container to workspace $ws7
+bindsym $mod+Shift+8          move container to workspace $ws8
+bindsym $mod+Shift+9          move container to workspace $ws9
+bindsym $mod+Shift+0          move container to workspace $ws0
+
+# Scratchpad
+bindsym $mod+Shift+minus      move scratchpad
+bindsym $mod+minus            scratchpad show
+
+mode "resize" {
+  bindsym Left resize shrink width 5 px or 5 ppt
+    bindsym Down resize grow height 5 px or 5 ppt
+    bindsym Up resize shrink height 5 px or 5 ppt
+    bindsym Right resize grow width 5 px or 5 ppt
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# Mode bindings
+bindsym $mod+r mode "resize"
+
+# Property Name         Border  BG      Text    Indicator Child Border
+client.focused          $base05 $base0D $base00 $base0D $base0D
+client.focused_inactive $base01 $base01 $base05 $base03 $base01
+client.unfocused        $base01 $base00 $base05 $base01 $base01
+client.urgent           $base08 $base08 $base00 $base08 $base08
+client.placeholder      $base00 $base00 $base05 $base00 $base00
+client.background       $base07
+
+bar {
+  font pango:FantasqueSansMono Nerd Font 10
+  position top
+  status_command i3blocks
+  strip_workspace_numbers yes
+
+  colors {
+    background $base00
+    separator  $base01
+    statusline $base04
+
+    # State             Border  BG      Text
+    focused_workspace   $base05 $base0D $base00
+    active_workspace    $base05 $base03 $base00
+    inactive_workspace  $base03 $base01 $base05
+    urgent_workspace    $base08 $base08 $base00
+    binding_mode        $base00 $base0A $base00
+  }
+}

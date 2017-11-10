@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+export PATH=$HOME/.local/bin:$PATH
+
+for f in {.Xdefaults,.Xresources}; do
+  [[ -f $HOME/$f ]] && xrdb -merge $HOME/$f
+done
+
+set-random-background
+
+exec i3

@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+set -x
+
+items=()
+items+="[i3] Reload\n"
+items+="[i3] Restart\n"
+items+="[i3] Logout\n"
+items+="[System] Restart X\n"
+items+="[System] Reboot\n"
+items+="[System] Shutdown\n"
+items+="[System] Suspend"
+
+choice=$(echo -e $items | rofi -dmenu -p '$> ')
+
+case "$choice" in
+  "[i3] Reload")
+    i3-msg reload;;
+  "[i3] Restart")
+    i3-msg restart;;
+  "[i3] Logout")
+    i3-msg exit;;
+  "[System] Restart X")
+    sudo /bin/systemctl restart lightdm.service;;
+  "[System] Reboot")
+    sudo /bin/systemctl reboot;;
+  "[System] Shutdown")
+    sudo /bin/systemctl poweroff;;
+  "[System] Suspend")
+    sudo /bin/systemctl suspend;;
+esac

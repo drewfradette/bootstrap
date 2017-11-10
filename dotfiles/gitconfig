@@ -1,0 +1,34 @@
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  grep = auto
+
+[user]
+  name = drewfradette
+  email = drew.fradette@gmail.com
+
+[core]
+  excludesfile = ~/.gitignore
+  editor = nvim
+
+[bash]
+  showDirtyState = false
+  showUntrackedFiles = false
+  showStashState = false
+  showUpstream = false
+
+[alias]
+  st = status
+  co = checkout
+  clog = log --no-merges --pretty=format:\"%C(yellow)%cN %s %C(blue)(%ar)%n\"
+  plog = log --graph --decorate --pretty=oneline --abbrev-commit
+  slog = log --decorate --pretty=oneline --abbrev-commit
+  rev = checkout --
+  spull = pull --ff-only
+  rpull = pull --rebase
+  cstash = stash -u -k
+
+[push]
+  default = current
