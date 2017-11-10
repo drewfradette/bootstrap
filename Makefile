@@ -217,6 +217,7 @@ RUBY_VERSION=2.4.2
 RUBY_PATH=${RBENV_DIR}/versions/${RUBY_VERSION}
 ruby:
 	sudo apt install -y software-properties-common libssl-dev libreadline-dev zlib1g-dev
+	ln -svf ${PWD}/dotfiles/gemrc ${HOME}/.gemrc
 	[ -d ${RBENV_DIR} ] || git clone https://github.com/rbenv/rbenv ${RBENV_DIR}
 	cd ${RBENV_DIR}; \
 		git fetch --tags; \
@@ -232,7 +233,7 @@ ruby:
 	ln -svf ${RUBYBUILD_DIR} ${RBENV_DIR}/plugins/ruby-build
 	PATH="${RBENV_DIR}/bin:$$PATH" rbenv install --verbose --skip-existing ${RUBY_VERSION}
 	PATH="${RBENV_DIR}/bin:$$PATH" rbenv global ${RUBY_VERSION}
-	PATH=${RUBY_PATH}/bin:$$PATH gem install --no-rdoc --no-ri bundler pry activesupport
+	PATH=${RUBY_PATH}/bin:$$PATH gem install bundler pry activesupport
 
 .PHONY: skel
 skel:
