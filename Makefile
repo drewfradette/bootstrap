@@ -14,6 +14,10 @@ init: apt-fast apt-ensure-latest apt-base skel
 list:
 	@grep -E "^.PHONY" Makefile | awk '{ print $$2}'
 
+.PHONY: clean
+clean:
+	rm -rfI ${SRC_DIR}
+
 .PHONY: apt-base
 apt-base:
 	sudo apt install -y vim zsh git tmux silversearcher-ag mtr daemontools htop most
