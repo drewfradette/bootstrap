@@ -214,6 +214,7 @@ RBENV_DIR=${SRC_DIR}/rbenv
 RBENV_VERSION=1.1.1
 RUBYBUILD_DIR=${SRC_DIR}/ruby-build
 RUBY_VERSION=2.4.2
+RUBY_PATH=${RBENV_DIR}/versions/${RUBY_VERSION}
 ruby:
 	sudo apt install -y software-properties-common libssl-dev libreadline-dev zlib1g-dev
 	[ -d ${RBENV_DIR} ] || git clone https://github.com/rbenv/rbenv ${RBENV_DIR}
@@ -229,9 +230,9 @@ ruby:
 		git fetch --tags; \
 		git reset --hard ${RUBYBUILD_VERSION}
 	ln -svf ${RUBYBUILD_DIR} ${RBENV_DIR}/plugins/ruby-build
-	PATH="${RBENV_DIR}/bin:$$PATH" rbenv install -s ${RUBY_VERSION}
-	PATH="${RBENV_DIR}/bin:$$PATH" rbenv global 2.4.2
-	$(shell PATH=${RBENV_DIR}/bin:$$PATH rbenv which gem) install --no-rdoc --no-ri bundler pry activesupport
+	PATH="${RBENV_DIR}/bin:$$PATH" rbenv install --verbose --skip-existing ${RUBY_VERSION}
+	PATH="${RBENV_DIR}/bin:$$PATH" rbenv global ${RUBY_VERSION}
+	PATH=${RUBY_PATH}/bin:$$PATH gem install --no-rdoc --no-ri bundler pry activesupport
 
 .PHONY: skel
 skel:
