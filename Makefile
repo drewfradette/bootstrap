@@ -123,7 +123,7 @@ i3blocks:
 
 .PHONY: i3-utils
 i3-utils:
-	sudo apt install -y pasystray xfce4-taskmanager xfce4-power-manager shutter unclutter
+	sudo apt install -y pavucontrol pasystray xfce4-taskmanager xfce4-power-manager shutter unclutter
 
 .PHONY: nerdfonts
 NERDFONTS_DIR=${SRC_DIR}/nerd-fonts
