@@ -4,32 +4,40 @@ export ZSH_THEME="drewfradette"
 plugins=(git command-not-found git-extras sudo upstart heroku vagrant tmux ssh-agent history)
 source $ZSH/oh-my-zsh.sh
 
+## Bootstrap diff reminder
+BOOTSTRAP_DIR=${HOME}/src/bootstrap
+if [[ $(git -C ${BOOTSTRAP_DIR} status --porcelain | wc -l) != 0 ]]; then
+  echo -e "\e[1;32m[bootstrap]\e[0m You have uncommited changes. Check them in soon"
+fi
+
 if false || [[ -d $HOME/.rbenv/bin ]]; then
   export PATH=${HOME}/.rbenv/bin:$PATH
   eval "$(rbenv init -)"
 fi
 
-export LANG=en_US.UTF8
 export EDITOR=nvim
-export GOROOT=/usr/lib/go-1.9
 export GOPATH=$HOME/src/golang
-export REPORTTIME=2
+export GOROOT=/usr/lib/go-1.9
 export HISTSIZE=999999999999
+export LANG=en_US.UTF8
+export REPORTTIME=2
 export SAVEHIST=$HISTSIZE
 export TERM="rxvt-unicode-256color"
-
 export PATH="${HOME}/.local/bin:${GOPATH}/bin:${GOROOT}/bin:$PATH"
 
-alias ls="ls --group-directories-first --color=auto"
-alias ll="ls -lh"
-alias la="ll -a"
-alias vim="nvim"
-alias less="most"
-alias h="heroku"
-alias g="git"
-alias follow="tail -f"
 alias ag="ag --ignore vendor"
 alias agg="ag --noheading"
+alias dc="docker-compose"
+alias d="docker"
+alias follow="tail -f"
+alias g="git"
+alias h="heroku"
+alias kc="kafkacat"
+alias la="ll -a"
+alias less="most"
+alias ll="ls -lh"
+alias ls="ls --group-directories-first --color=auto"
+alias vim="nvim"
 
 cdg_autocomplete(){ reply=($(find $GOPATH/src/* -maxdepth 2 -type d | sed "s|^${GOPATH}/src/||g")) }
 cdg() { cd ${GOPATH}/src/${@} }
