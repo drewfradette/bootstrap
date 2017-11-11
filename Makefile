@@ -20,7 +20,8 @@ clean:
 
 .PHONY: apt-base
 apt-base:
-	sudo apt install -y vim zsh git tmux silversearcher-ag mtr daemontools htop most
+	sudo apt install -y vim zsh git tmux silversearcher-ag mtr \
+		daemontools htop most kafkacat
 
 .PHONY: apt-fast
 apt-fast:
