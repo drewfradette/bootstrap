@@ -190,7 +190,7 @@ parcellite:
 python:
 	sudo apt install -y python-pip
 	pip install --user --upgrade setuptools pip
-	pip install --user ipython
+	pip install --user --upgrade ipython grip
 
 .PHONY: rofi
 ROFI_DIR=${SRC_DIR}/rofi
