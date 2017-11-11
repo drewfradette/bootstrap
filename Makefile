@@ -43,6 +43,9 @@ backgrounds:
 DOCKER_FINGERPRINT=0EBFCD88
 DOCKER_GROUP=docker
 LSB_RELEASE=$(shell lsb_release -cs)
+DOCKER_COMPOSE_VERSION=1.17.1
+UNAME_S=$(shell uname -s)
+UNAME_M=$(shell uname -m)
 docker:
 	sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
 	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -53,6 +56,10 @@ docker:
 	sudo groupadd docker || true
 	sudo usermod -aG docker ${USER} || true
 	sudo systemctl enable docker
+	curl -L \
+		https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-${UNAME_S}-${UNAME_M} \
+		-o ${BIN_DIR}/docker-compose && \
+		chmod +x ${BIN_DIR}/docker-compose
 
 .PHONY: git
 git:
