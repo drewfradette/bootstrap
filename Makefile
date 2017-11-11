@@ -45,6 +45,7 @@ DOCKER_FINGERPRINT=0EBFCD88
 DOCKER_GROUP=docker
 LSB_RELEASE=$(shell lsb_release -cs)
 DOCKER_COMPOSE_VERSION=1.17.1
+DOCKER_MACHINE_VERSION=v0.13.0
 UNAME_S=$(shell uname -s)
 UNAME_M=$(shell uname -m)
 docker:
@@ -61,6 +62,10 @@ docker:
 		https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-${UNAME_S}-${UNAME_M} \
 		-o ${BIN_DIR}/docker-compose && \
 		chmod +x ${BIN_DIR}/docker-compose
+	curl -L \
+		https://github.com/docker/machine/releases/download/${DOCKER_MACHINE_VERSION}/docker-machine-${UNAME_S}-${UNAME_M} \
+		-o ${BIN_DIR}/docker-machine && \
+  chmod +x ${BIN_DIR}/docker-machine
 
 .PHONY: git
 git:
