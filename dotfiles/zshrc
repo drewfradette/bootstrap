@@ -18,7 +18,7 @@ export HISTSIZE=999999999999
 export SAVEHIST=$HISTSIZE
 export TERM="rxvt-unicode-256color"
 
-export PATH="${GOPATH}/bin:${GOROOT}/bin:$PATH"
+export PATH="${HOME}/.local/bin:${GOPATH}/bin:${GOROOT}/bin:$PATH"
 
 alias ls="ls --group-directories-first --color=auto"
 alias ll="ls -lh"
